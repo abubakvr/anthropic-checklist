@@ -25,13 +25,12 @@ export async function POST(request) {
           content: [
             {
               type: "text",
-              text: query, // Use the query sent from the client
+              text: query,
             },
           ],
         },
       ],
     });
-
     return NextResponse.json({ data: msg });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
