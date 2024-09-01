@@ -33,6 +33,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
 
+      - name: Add .env variables
+        run: |
+          echo "ANTHROPIC_KEY=${{ secrets.ANTHROPIC_KEY }}" >> .env
+
       - name: Build Docker image
         run: |
           docker build . --platform linux/amd64 -t ghcr.io/sadeeqdev/checklistai:latest
