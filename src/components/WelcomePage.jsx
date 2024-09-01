@@ -73,7 +73,7 @@ const WelcomePage = () => {
           message.length > 0 ? "mt-12" : "mt-60"
         }`}
       >
-        Welcome, what do you plan on doing today?
+        Welcome to Checklist, what do you plan on doing today?
       </h1>
       <div className="flex gap-x-3 w-2/4 items-center">
         <form
