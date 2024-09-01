@@ -36,8 +36,8 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
-          script: |
-            docker push ghcr.io/sadeeqdev/checklistai:latest
+        run: |
+          docker push ghcr.io/sadeeqdev/checklistai:latest
 
       - name: Set up SSH Key and Deploy Docker Image on Server
         uses: appleboy/ssh-action@master
