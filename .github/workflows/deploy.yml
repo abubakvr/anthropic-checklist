@@ -30,6 +30,9 @@ jobs:
         run: |
           docker build . --platform linux/amd64 -t ghcr.io/sadeeqdev/checklistai:latest
 
+      -name: Push Docker Image
+      run: | 
+          docker push ghcr.io/sadeeqdev/checklistai:latest 
       - name: Set up SSH Key and Deploy Docker Image on Server
         uses: appleboy/ssh-action@master
         env:
@@ -40,11 +43,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
-            # Pull the latest code from GitHub
-            git config --global url."https://${{ secrets.PERSONAL_GITHUB_TOKEN }}:@github.com".insteadOf "https://github.com"
-            cd /path/to/your/app/
-            git pull origin main
-
             # Stop the existing Docker container
             docker stop checklistai || true
             docker rm checklistai || true
