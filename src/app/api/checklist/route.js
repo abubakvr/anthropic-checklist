@@ -1,8 +1,18 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextResponse } from "next/server";
+import { pool } from "../../../lib/db";
 
-export async function GET() {
-  return NextResponse.json({ characters: "ABCDEFGHIJKLMNOPQRSTUVWXYZ" });
+// export async function GET() {
+//   return NextResponse.json({ characters: "ABCDEFGHIJKLMNOPQRSTUVWXYZ" });
+// }
+
+export async function GET(req) {
+  try {
+    const result = await pool.query("SELECT NOW()");
+    return NextResponse.json({ data: result }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error: error }, { status: 500 });
+  }
 }
 
 export async function POST(request) {
