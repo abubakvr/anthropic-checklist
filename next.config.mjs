@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "standalone", // Outputs a Single-Page Application (SPA).
+  env: {
+    ANALYTICS_ID: process.env.NEXT_PUBLIC_ANALYTICS_ID,
+  },
   async headers() {
     return [
       {
