@@ -15,7 +15,7 @@ const Page = () => {
       const handleRouteChange = (url) => {
         console.log("App is changing to: ", url);
         // Add your Google Analytics event or any other logic here
-        window.gtag("config", "GA_TRACKING_ID", {
+        window.gtag("config", GA_TRACKING_ID, {
           page_path: url,
         });
       };
