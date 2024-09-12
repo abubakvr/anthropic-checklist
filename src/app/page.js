@@ -10,16 +10,24 @@ const Page = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const handleRouteChange = (url) => {
-      window.gtag("config", GA_TRACKING_ID, {
-        page_path: url,
-      });
-    };
+    // Ensure this runs only in the browser (client-side)
+    if (typeof window !== "undefined" && router.events) {
+      const handleRouteChange = (url) => {
+        console.log("App is changing to: ", url);
+        // Add your Google Analytics event or any other logic here
+        window.gtag("config", "GA_TRACKING_ID", {
+          page_path: url,
+        });
+      };
 
-    router.events.on("routeChangeComplete", handleRouteChange);
-    return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
-    };
+      // Listen to route changes
+      router.events.on("routeChangeComplete", handleRouteChange);
+
+      // Clean up the listener on component unmount
+      return () => {
+        router.events.off("routeChangeComplete", handleRouteChange);
+      };
+    }
   }, [router.events]);
 
   return <WelcomePage>page</WelcomePage>;
