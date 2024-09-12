@@ -1,7 +1,7 @@
-import { GoogleAnalytics } from "@next/third-parties/google";
+// import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata = {
-  title: "My App",
+  title: "Abubakar Ibrahim",
   description: "My App is a checklist app",
 };
 
@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
       <body suppressHydrationWarning={true}>
         <div id="root">{children}</div>
       </body>
-      <GoogleAnalytics gaId={GA_TRACKING_ID} />
+      {/* <GoogleAnalytics gaId={GA_TRACKING_ID} /> */}
     </html>
   );
 }
