@@ -1,11 +1,11 @@
 import { GoogleAnalytics } from "@next/third-parties/google";
 
-const GA_TRACKING_ID = process.env.ANALYTICS_ID;
-
 export const metadata = {
   title: "My App",
   description: "My App is a checklist app",
 };
+
+const GA_TRACKING_ID = process.env.ANALYTICS_ID;
 
 export default function RootLayout({ children }) {
   return (
