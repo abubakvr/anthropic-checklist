@@ -1,11 +1,11 @@
-// import { GoogleAnalytics } from "@next/third-parties/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata = {
   title: "Abubakar Ibrahim",
-  description: "My App is a checklist app",
+  description: "My Portfolio Site",
 };
 
-// const GA_TRACKING_ID = process.env.ANALYTICS_ID;
+const GA_TRACKING_ID = process.env.ANALYTICS_ID;
 
 export default function RootLayout({ children }) {
   return (
@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
       <body suppressHydrationWarning={true}>
         <div id="root">{children}</div>
       </body>
-      {/* <GoogleAnalytics gaId={GA_TRACKING_ID} /> */}
+      <GoogleAnalytics gaId={GA_TRACKING_ID} />
     </html>
   );
 }
