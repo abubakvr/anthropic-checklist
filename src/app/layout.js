@@ -5,7 +5,7 @@ export const metadata = {
   description: "My App is a checklist app",
 };
 
-const GA_TRACKING_ID = process.env.ANALYTICS_ID;
+// const GA_TRACKING_ID = process.env.ANALYTICS_ID;
 
 export default function RootLayout({ children }) {
   return (
