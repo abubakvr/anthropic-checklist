@@ -1,9 +1,10 @@
-name: Auto Deploy in VPS after Push in Production
+name: Auto Deploy in VPS after Push
 
 on:
   push:
     branches:
       - main
+      - staging
 
 jobs:
   deploy:
@@ -15,7 +16,7 @@ jobs:
       - name: Checkout Repository
         uses: "actions/checkout@v2"
         with:
-          ref: main
+          ref: ${{ github.ref }}
           token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
 
       - name: Create GitHub deployment
@@ -24,7 +25,7 @@ jobs:
         with:
           token: "${{ github.token }}"
           environment-url: ${{ vars.MY_APP }}
-          environment: production
+          environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
 
       - name: Login to GitHub Container Registry and push docker image
         uses: docker/login-action@v3
@@ -40,11 +41,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build . --platform linux/amd64 -t ghcr.io/sadeeqdev/checklistai:latest
+          docker build . --platform linux/amd64 -t ghcr.io/sadeeqdev/checklistai:${{ github.ref == 'refs/heads/main' && 'latest' || 'staging' }}
 
       - name: Push Docker image
         run: |
-          docker push ghcr.io/sadeeqdev/checklistai:latest
+          docker push ghcr.io/sadeeqdev/checklistai:${{ github.ref == 'refs/heads/main' && 'latest' || 'staging' }}
 
       - name: Set up SSH Key and Deploy Docker Image on Server
         uses: appleboy/ssh-action@master
@@ -56,13 +57,21 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
-            # Stop the existing Docker container
-            sudo docker stop checklistai || true
-            sudo docker rm checklistai || true
+            # Check if the container is running and stop it if it exists
+            if [ "$(sudo docker ps -q -f name=checklistai-${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }})" ]; then
+              echo "Stopping existing container..."
+              sudo docker stop checklistai-${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
+            fi
+
+            # Remove the container if it exists
+            if [ "$(sudo docker ps -a -q -f name=checklistai-${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }})" ]; then
+              echo "Removing existing container..."
+              sudo docker rm checklistai-${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
+            fi
 
             # Run the new Docker container
-            sudo docker pull ghcr.io/sadeeqdev/checklistai:latest
-            sudo docker run -d -p 3000:3000 --name checklistai ghcr.io/sadeeqdev/checklistai:latest
+            sudo docker pull ghcr.io/sadeeqdev/checklistai:${{ github.ref == 'refs/heads/main' && 'latest' || 'staging' }}
+            sudo docker run -d -p ${{ github.ref == 'refs/heads/main' && '3000:3000' || '3001:3000' }} --name checklistai-${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }} ghcr.io/sadeeqdev/checklistai:${{ github.ref == 'refs/heads/main' && 'latest' || 'staging' }}
 
             # Restart Nginx
             sudo systemctl restart nginx
