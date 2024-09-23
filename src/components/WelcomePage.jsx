@@ -1,3 +1,5 @@
+import { sendGAEvent } from "@next/third-parties/google";
+
 import React, { useState, useEffect } from "react";
 import { Spinner } from "./Spinner";
 
@@ -17,6 +19,7 @@ const WelcomePage = () => {
   const [visibleItems, setVisibleItems] = useState([]);
 
   const processSearch = async () => {
+    sendGAEvent("event", "buttonClicked", { value: "Process Search" });
     setIsLoading(true);
     try {
       const response = await fetch("/api/checklist", {
@@ -42,11 +45,14 @@ const WelcomePage = () => {
         }
 
         setIsLoading(false);
+        sendGAEvent("event", "Requests", { value: "Success" });
       } else {
         console.error(data.error);
         setIsLoading(false);
+        sendGAEvent("event", "Requests", { value: "Failure" });
       }
     } catch (error) {
+      sendGAEvent("event", "Requests", { value: "Failure" });
       console.error("Error:", error);
       setIsLoading(false);
     }
