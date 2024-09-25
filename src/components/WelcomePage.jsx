@@ -1,5 +1,5 @@
+"use client";
 import { sendGAEvent } from "@next/third-parties/google";
-
 import React, { useState, useEffect } from "react";
 import { Spinner } from "./Spinner";
 
@@ -12,7 +12,7 @@ function parseAndFormatData(inputString) {
   }
 }
 
-const WelcomePage = () => {
+const WelcomePage = ({ ipAddress }) => {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState([]);
@@ -135,6 +135,9 @@ const WelcomePage = () => {
             </div>
           </>
         )}
+      </div>
+      <div className="text-white text-4xl text-center mt-8">
+        IP Address: {ipAddress}
       </div>
     </div>
   );
