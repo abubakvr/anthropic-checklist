@@ -1,13 +1,32 @@
 import { NextResponse } from "next/server";
+import { RESTRICTED_COUNTRIES } from "./data/restrictedCountries";
+import { getIpUrl } from "./lib/helpers";
+const ACCESS_TOKEN = process.env.IPINFO_TOKEN;
 
-export function middleware(request) {
+export async function middleware(request) {
   // Extract IP address from the request headers
-  const ip =
-    request.headers.get("x-forwarded-for") || request.ip || "Unknown IP";
+  let ip = request.headers.get("x-forwarded-for") || request.ip || "Unknown IP";
+
+  if (ip.includes(",")) {
+    ip = ip.split(",")[0].trim();
+  }
+
+  // Fetch geolocation info using ipinfo.io (or any other service)
+  const geoRes = await fetch(getIpUrl(ip, ACCESS_TOKEN));
+  const geoData = await geoRes.json();
+
+  const isRestricted = RESTRICTED_COUNTRIES.find(
+    (item) => item === geoData.country
+  );
+
+  // If the country is restricted, redirect to /restricted
+  if (isRestricted) {
+    return NextResponse.redirect(new URL("/restricted", request.url));
+  }
 
   // Update request headers
   const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-client-ip", ip); // Add the IP address to request headers
+  requestHeaders.set("x-client-ip", geoData.country);
 
   // Create the response
   const response = NextResponse.next({
@@ -16,7 +35,7 @@ export function middleware(request) {
     },
   });
 
-  response.headers.set("x-client-ip", ip); // Set IP address in the response headers
+  response.headers.set("x-client-ip", geoData.country); // Set IP address in the response headers
 
   return response;
 }
