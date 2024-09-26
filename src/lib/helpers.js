@@ -23,3 +23,7 @@ export function parseChecklistString(input) {
     return [];
   }
 }
+
+export function getIpUrl(ipAddress, accessToken) {
+  return `https://ipinfo.io/${ipAddress}/json?token=${accessToken}`;
+}
