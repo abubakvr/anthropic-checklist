@@ -38,6 +38,7 @@ jobs:
         run: |
           echo "ANTHROPIC_KEY=${{ secrets.ANTHROPIC_KEY }}" >> .env
           echo "NEXT_PUBLIC_ANALYTICS_ID=${{ secrets.NEXT_PUBLIC_ANALYTICS_ID }}" >> .env
+          echo "IPINFO_TOKEN=${{ secrets.IPINFO_TOKEN }}" >> .env
 
       - name: Build Docker image
         run: |
