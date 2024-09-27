@@ -13,7 +13,7 @@ export async function middleware(request) {
 
   // Fetch geolocation info using
   // ipinfo.io (or any other service)
-  const geoRes = await fetch(getIpUrl("146.185.31.221", ACCESS_TOKEN));
+  const geoRes = await fetch(getIpUrl(ip, ACCESS_TOKEN));
   const geoData = await geoRes.json();
 
   const isRestricted = RESTRICTED_COUNTRIES.includes(geoData.country);
