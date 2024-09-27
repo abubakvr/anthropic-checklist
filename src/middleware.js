@@ -11,16 +11,15 @@ export async function middleware(request) {
     ip = ip.split(",")[0].trim();
   }
 
-  // Fetch geolocation info using ipinfo.io (or any other service)
-  const geoRes = await fetch(getIpUrl(ip, ACCESS_TOKEN));
+  // Fetch geolocation info using
+  // ipinfo.io (or any other service)
+  const geoRes = await fetch(getIpUrl("146.185.31.221", ACCESS_TOKEN));
   const geoData = await geoRes.json();
 
-  const isRestricted = RESTRICTED_COUNTRIES.find(
-    (item) => item === geoData.country
-  );
+  const isRestricted = RESTRICTED_COUNTRIES.includes(geoData.country);
 
-  // If the country is restricted, redirect to /restricted
-  if (isRestricted) {
+  // If the country is restricted, redirect to /restricted, but don't apply middleware to /restricted
+  if (isRestricted && !request.nextUrl.pathname.startsWith("/restricted")) {
     return NextResponse.redirect(new URL("/restricted", request.url));
   }
 

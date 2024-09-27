@@ -1,1 +1,1 @@
-export const RESTRICTED_COUNTRIES = ["GB"];
+export const RESTRICTED_COUNTRIES = ["NG"];
