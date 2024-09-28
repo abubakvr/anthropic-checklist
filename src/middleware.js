@@ -11,8 +11,7 @@ export async function middleware(request) {
     ip = ip.split(",")[0].trim();
   }
 
-  // Fetch geolocation info using
-  // ipinfo.io (or any other service)
+  // Fetch geolocation info usingipinfo.io
   const geoRes = await fetch(getIpUrl(ip, ACCESS_TOKEN));
   const geoData = await geoRes.json();
 
@@ -55,5 +54,6 @@ export const config = {
         { type: "header", key: "purpose", value: "prefetch" },
       ],
     },
+    "/", // Explicitly match the root "/"
   ],
 };
