@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.26.1",
+    "@getbrevo/brevo": "^2.2.0",
     "@next/third-parties": "^14.2.10",
     "dotenv": "^16.4.5",
     "eslint-config-next": "^14.2.7",
