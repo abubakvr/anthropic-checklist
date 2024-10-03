@@ -42,6 +42,10 @@ RUN adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
 
+# Copy credentials.json and token.json from the local directory to the Docker container
+COPY credentials.json ./credentials.json
+COPY token.json ./token.json
+
 # Set the correct permission for prerender cache
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
