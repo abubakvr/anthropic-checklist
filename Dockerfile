@@ -6,6 +6,10 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
+# Create credentials.json and token.json using environment variables
+RUN echo "$GCP_CREDENTIALS" > /app/credentials.json && \
+    echo "$OAUTH_TOKEN" > /app/token.json
+
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 RUN \
@@ -41,6 +45,10 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
+
+# Copy credentials.json and token.json from the local directory to the Docker container
+COPY credentials.json ./credentials.json
+COPY token.json ./token.json
 
 # Set the correct permission for prerender cache
 RUN mkdir .next
