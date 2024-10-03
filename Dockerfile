@@ -45,8 +45,9 @@ COPY --from=builder /app/public ./public
 # Copy credentials.json and token.json from the local directory to the Docker container
 COPY --from=builder /app/credentials.json ./credentials.json
 COPY --from=builder /app/token.json ./token.json
-# COPY credentials.json ./credentials.json
-# COPY token.json ./token.json
+
+COPY credentials.json ./app/credentials.json
+COPY token.json ./app/token.json
 
 # Set the correct permission for prerender cache
 RUN mkdir .next
