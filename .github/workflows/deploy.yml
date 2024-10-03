@@ -41,6 +41,14 @@ jobs:
           echo "IPINFO_TOKEN=${{ secrets.IPINFO_TOKEN }}" >> .env
           echo "BREVO_API_KEY=${{ secrets.BREVO_API_KEY }}" >> .env
 
+      - name: Create credentials.json file
+        run: |
+          echo "{{ secrets.GCP_CREDENTIALS }}" > $GITHUB_WORKSPACE/credentials.json
+
+      - name: Create token.json file
+        run: |
+          echo "{{ secrets.OAUTH_TOKEN }}" > $GITHUB_WORKSPACE/token.json
+
       - name: Build Docker image
         run: |
           docker build . --platform linux/amd64 -t ghcr.io/sadeeqdev/checklistai:${{ github.ref == 'refs/heads/main' && 'latest' || 'staging' }}
