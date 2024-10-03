@@ -6,10 +6,6 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Create credentials.json and token.json using environment variables
-RUN echo "$GCP_CREDENTIALS" > /app/credentials.json && \
-    echo "$OAUTH_TOKEN" > /app/token.json
-
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 RUN \
