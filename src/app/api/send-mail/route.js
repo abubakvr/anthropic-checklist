@@ -12,7 +12,7 @@ const sendEmail = async (to, subject, htmlContent, params = {}) => {
   sendSmtpEmail.subject = subject;
   sendSmtpEmail.htmlContent = htmlContent;
   sendSmtpEmail.sender = {
-    name: "Abubakar Ibrahim",
+    name: "Zerosoft",
     email: "hello@abubakar.life",
   };
   sendSmtpEmail.to = [{ email: to.email, name: to.name }];

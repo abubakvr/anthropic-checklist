@@ -16,6 +16,8 @@ const SCOPES = [
 const TOKEN_PATH = path.join(process.cwd(), "token.json");
 const CREDENTIALS_PATH = path.join(process.cwd(), "credentials.json");
 
+console.log("TOKEN_PATH", TOKEN_PATH);
+
 /**
  * Reads previously authorized credentials from the save file.
  *
