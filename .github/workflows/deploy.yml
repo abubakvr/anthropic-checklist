@@ -43,11 +43,11 @@ jobs:
 
       - name: Create credentials.json file
         run: |
-          echo "${{ secrets.GCP_CREDENTIALS }}" > credentials.json
+          echo "${{ secrets.GCP_CREDENTIALS }}" > ./app/credentials.json
 
       - name: Create token.json file
         run: |
-          echo "${{ secrets.OAUTH_TOKEN }}" > token.json
+          echo "${{ secrets.OAUTH_TOKEN }}" > ./app/token.json
 
       - name: Build Docker image
         run: |
