@@ -18,7 +18,7 @@ const sendEmail = async (to, subject, htmlContent, params = {}) => {
   sendSmtpEmail.to = [{ email: to.email, name: to.name }];
   sendSmtpEmail.replyTo = {
     email: "hello@abubakar.life",
-    name: "Abubakar Ibrahim",
+    name: "Zerosoft",
   };
   sendSmtpEmail.headers = { "X-Mailer": "Zerosoft Mailer" };
   sendSmtpEmail.params = params;
