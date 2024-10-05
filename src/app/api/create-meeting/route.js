@@ -83,7 +83,6 @@ async function createEvent(authClient, eventDetails) {
 
   const event = {
     summary,
-    location: "Google Meet",
     description,
     start: {
       dateTime: startTime, // Use the provided start time
