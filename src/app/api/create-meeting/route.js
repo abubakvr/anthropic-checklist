@@ -86,11 +86,11 @@ async function createEvent(authClient, eventDetails) {
     description,
     start: {
       dateTime: startTime, // Use the provided start time
-      timeZone: "Africa/Lagos", // Change to your time zone
+      timeZone: "Africa/Lagos",
     },
     end: {
       dateTime: endTime, // Use the provided end time
-      timeZone: "Africa/Lagos", // Change to your time zone
+      timeZone: "Africa/Lagos",
     },
     attendees: attendees.map((email) => ({ email })), // Convert email array to attendee objects
     reminders: {
