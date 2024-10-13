@@ -85,7 +85,7 @@ async function createEvent(authClient, eventDetails) {
     summary,
     description,
     start: {
-      dateTime: startTime, // Use the provided start time
+      dateTime: startTime,
       timeZone: "Africa/Lagos",
     },
     end: {
