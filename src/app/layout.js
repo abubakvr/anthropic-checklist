@@ -1,8 +1,8 @@
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata = {
-  title: "Abubakar Ibrahim",
-  description: "My Portfolio Site",
+  title: "Checklist AI",
+  description: "Simple Checkist Maker",
 };
 
 const GA_TRACKING_ID = process.env.ANALYTICS_ID;
